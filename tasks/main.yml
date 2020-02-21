@@ -1,0 +1,9 @@
+---
+- name: Include OS family specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}.yml"
+
+- include_tasks: heartbeats_pre_{{ ansible_os_family }}.yml
+- include_tasks: heartbeats_install_{{ ansible_os_family }}.yml
+- include_tasks: heartbeats_post_{{ ansible_os_family }}.yml
