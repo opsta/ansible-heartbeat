@@ -21,25 +21,8 @@ heartbeat.config.monitors:
 
 # Configure monitors inline
 heartbeat.monitors:
-- type: http
-  name: Elasticsearch
-  # List or urls to query
-  urls: ["https://elk-demo.opsta.in.th:9200"]
-  # Configure task schedule
-  schedule: '@every 30s'
-- type: icmp
-  name: Google Public DNS
-  schedule: '*/30 * * * * * *' 
-  hosts: ["8.8.8.8"]
+{{ heartbeat_monitors | to_nice_yaml(indent=2) }}
 
-- type: tcp
-  schedule: '@every 5s'
-  hosts: ["34.87.9.210:9042"]  # default TCP Echo Protocol
-  #check.send: "Check"
-  #check.receive: "Check"
-
-  # Total test connection and data exchange timeout
-  #timeout: 16s
 
 #==================== Elasticsearch template setting ==========================
 
