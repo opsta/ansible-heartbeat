@@ -1,4 +1,6 @@
 ---
 - name: Install Heartbeat
   apt:
-    deb: "{{deb_file_url}}"
+    name: "{{install_heartbeat}}"
+    update_cache: yes
+
