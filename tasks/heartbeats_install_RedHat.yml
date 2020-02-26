@@ -1,5 +1,5 @@
 ---
 - name: Install heartbeat
   yum:
-    name: "{{install_heartbeat}}"
+    name: "{{ rpm_file_url }}"
     state: present

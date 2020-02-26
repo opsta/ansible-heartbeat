@@ -21,7 +21,7 @@ heartbeat.config.monitors:
 
 # Configure monitors inline
 heartbeat.monitors:
-{{ heartbeat_monitors | to_nice_yaml(indent=2) }}
+{{ heartbeat_monitors | to_nice_yaml(indent=2) | indent(2 , indentfirst=True) }}
 
 
 #==================== Elasticsearch template setting ==========================
@@ -89,7 +89,7 @@ output.elasticsearch:
   # Optional protocol and basic auth credentials.
   protocol: "https"
   username: "elastic"
-  password: "bD9x4Ob1SnidVZrU4U9Q"
+  password: "opstathailand"
 
 #----------------------------- Logstash output --------------------------------
 #output.logstash:

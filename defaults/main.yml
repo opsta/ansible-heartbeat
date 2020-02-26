@@ -10,7 +10,26 @@ elastic_repository_filename: elastic-7.x.list
 
 heartbeat_config_file_src_path: heartbeat.yml.j2
 heartbeat_config_file_dest_path: /etc/heartbeat/heartbeat.yml
+
 heartbeat_module_file_src_path: "monitors.d"
 heartbeat_module_file_dest_path: /etc/heartbeat/monitors.d
 
 heartbeat_modules: ["sample.tcp", "sample.icmp", "sample.http" ]
+
+heartbeat_monitors:
+- type: http                                              
+  name: Elasticsearch                                     
+  # List or urls to query                                 
+  urls: ["https://elk-demo.opsta.in.th:9200"]             
+  # Configure task schedule                               
+  schedule: '@every 30s'                                  
+                                                          
+- type: icmp                                              
+  name: Google Public DNS                                 
+  schedule: '*/30 * * * * * *'                            
+  hosts: ["8.8.8.8"]                                      
+                                                          
+- type: tcp                                               
+  schedule: '@every 5s'                                   
+  hosts: ["34.87.9.210:9042"]  # default TCP Echo Protocol
+

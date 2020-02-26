@@ -1,12 +1,9 @@
 ---
 - name: Copy configuration file
   template:
-    src: "{{ heartbeat_config_file_src_path }}"
+    src:  "{{ heartbeat_config_file_src_path }}"
     dest: "{{ heartbeat_config_file_dest_path }}"
 
-- name: make directory
-  ignore_errors: true
-  command: "mkdir {{ heartbeat_module_file_dest_path }}"
 
 - name: Copy modules configuration file
   template:

@@ -1,6 +1,6 @@
 ---
     - name: Restart Heartbeat
       service:
-        name: heartbeat
+        name: heartbeat-elastic
         state: restarted
         enabled: true
