@@ -1,0 +1,26 @@
+---
+- block:
+  - name: DEB | Add Elasticsearch repository key
+    apt_key:
+      url: "{{ heartbeat_apt_key_url }}"
+      state: present
+
+  - name: DEB | Save Elasticsearch apt-repository
+    apt_repository:
+      repo: "{{ heartbeat_apt_repo }}"
+      state: present
+  when: ansible_os_family == 'Debian'
+
+- block:
+  - name: RH | Add Elasticsearch repository
+    rpm_key:
+      key: "{{ heartbeat_yum_key_url }}"
+
+  - name: RH | Add Heartbeat repository
+    yum_repository:
+      name: "{{ heartbeat_yum_repo_name }}"
+      description: "{{ heartbeat_yum_repo_description }}"
+      baseurl: "{{ heartbeat_yum_repo_extention_url }}"
+      gpgkey: "{{ heartbeat_yum_key_extenion_url }}"
+      gpgcheck: true
+  when: ansible_os_family == 'RedHat'

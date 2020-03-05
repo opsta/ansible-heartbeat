@@ -1,5 +1,0 @@
----
-- name: Install heartbeat
-  yum:
-    name: "{{ install_heartbeat }}"
-    state: present

@@ -18,12 +18,6 @@ heartbeat.config.monitors:
   reload.enabled: false
   # How often to check for changes
   reload.period: 5s
-
-# Configure monitors inline
-heartbeat.monitors:
-{{ heartbeat_monitors | to_nice_yaml(indent=2) | indent(2 , indentfirst=True) }}
-
-
 #==================== Elasticsearch template setting ==========================
 
 setup.template.settings:
@@ -43,8 +37,12 @@ setup.template.settings:
 
 # Optional fields that you can specify to add additional information to the
 # output.
-#fields:
-#  env: staging
+{% if heartbeat_custom_fields is defined %}
+fields:
+  {% for key, value in heartbeat_custom_fields.items() %}
+    {{ key }}: {{ value }}
+  {% endfor %}
+{% endif %}
 
 
 #============================== Kibana =====================================
@@ -57,7 +55,7 @@ setup.kibana:
   # Scheme and port can be left out and will be set to the default (http and 5601)
   # In case you specify and additional path, the scheme is required: http://localhost:5601/path
   # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
-  host: "10.148.0.72:5601"
+  host: {{ heartbeat_kibana_host }}
 
   # Kibana Space ID
   # ID of the Kibana Space into which the dashboards should be loaded. By default,
@@ -84,12 +82,17 @@ setup.kibana:
 #-------------------------- Elasticsearch output ------------------------------
 output.elasticsearch:
   # Array of hosts to connect to.
-  hosts: ["elk-demo.opsta.in.th:9200"]
+  hosts: {{ heartbeat_elasticsearch_hosts }}
 
-  # Optional protocol and basic auth credentials.
-  protocol: "https"
-  username: "elastic"
-  password: "opstathailand"
+  {% if heartbeat_elasticsearch_https_enabled is defined and heartbeat_elasticsearch_https_enabled is sameas true %}
+  # Protocol - either `http` (default) or `https`.
+  protocol: "{{ heartbeat_elasticsearch_xpac['protocol'] }}"
+
+  # Authentication credentials - either API key or username/password.
+  api_key: "id:api_key"
+  username: "{{ heartbeat_elasticsearch_xpac['username'] }}"
+  password: "{{ heartbeat_elasticsearch_xpac['password'] }}"
+  {% endif %}
 
 #----------------------------- Logstash output --------------------------------
 #output.logstash:

@@ -1,0 +1,32 @@
+---
+  - name: Search Configure | Set list of path to look for local Heartbeat configuration directory
+    set_fact:
+      heartbeat_search_config_paths: "{{ heartbeat_search_config_paths }} + [ '{{ heartbeat_search_config_path }}' ]"
+    with_items: "{{ group_names }}"
+  - debug: var=heartbeat_search_config_paths
+
+  - name: Search Configure | Check if heartbeat configuration directory exists
+    stat:
+      path: "{{ item }}"
+    register: heartbeat_config_check
+    become: false
+    delegate_to: 127.0.0.1
+    with_first_found:
+      - files: "{{ heartbeat_search_config_paths }}"
+        skip: true
+
+  - name: Search Configure | Set Heartbeat configuration directory
+    set_fact:
+      heartbeat_host_config_path: "{{ heartbeat_config_check.results[0].stat.path }}"
+    when:
+      - heartbeat_config_check.results[0] is defined
+      - heartbeat_config_check.results[0].stat is defined
+      - heartbeat_config_check.results[0].stat.isdir
+  - debug: var=heartbeat_host_config_path
+
+  - name: Search Configure | Check if heartbeat template configuration file is exists
+    stat:
+      path: "{{ heartbeat_host_config_file_path }}"
+    become: false
+    delegate_to: 127.0.0.1
+    register: heartbeat_config_check

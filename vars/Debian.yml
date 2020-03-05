@@ -1,5 +1,5 @@
 ---
-install_heartbeat: heartbeat-elastic
-apt_elastic_key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-apt_transport_package: apt-transport-https
-apt_elastic_repository: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+heartbeat_apt_package: heartbeat-elastic
+heartbeat_apt_key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+heartbeat_apt_repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+  

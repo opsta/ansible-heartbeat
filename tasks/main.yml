@@ -6,4 +6,7 @@
 
 - include_tasks: heartbeats_pre_{{ ansible_os_family }}.yml
 - include_tasks: heartbeats_install_{{ ansible_os_family }}.yml
-- include_tasks: heartbeats_post_{{ ansible_os_family }}.yml
+
+- block:
+  - include_tasks: heartbeats_post_{{ ansible_os_family }}.yml
+  tags: heartbeat-config

@@ -1,6 +1,0 @@
----
-- name: Install Heartbeat
-  apt:
-    name: "{{install_heartbeat}}"
-    update_cache: yes
-

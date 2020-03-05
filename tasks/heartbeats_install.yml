@@ -1,0 +1,14 @@
+---
+- block:
+  - name: DEB | Install Heartbeat
+    apt:
+      name: "{{ heartbeat_apt_package }}"
+      update_cache: yes
+  when: ansible_os_family == 'Debian'
+
+- block:
+  - name: RH | Install Heartbeat
+    yum:
+      name: "{{ heartbeat_yum_package }}"
+      state: present
+  when: ansible_os_family == 'RedHat'

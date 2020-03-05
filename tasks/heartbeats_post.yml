@@ -1,0 +1,25 @@
+---
+- block:
+  - name: DEB | Copy configuration file
+    template:
+      src: "{{ heartbeat_host_config_file_path if heartbeat_config_check.stat.exists else 'heartbeat.yml.j2' }}"
+      dest: "{{ heartbeat_config_file_path }}"
+    notify: Restart Heartbeats
+
+  when: ansible_os_family == 'Debian'
+
+- block:
+  - name: RH | Copy configuration file
+    template:
+      src: "{{ heartbeat_host_config_file_path if heartbeat_config_check.stat.exists else 'heartbeat.yml.j2' }}"
+      dest: "{{ heartbeat_config_file_path }}"
+    notify: Restart Heartbeats
+  when: ansible_os_family == 'Debian'
+
+- name: Copy module files
+  copy:
+    src: "{{ heartbeat_module_file_path }}/sample.{{ item }}.yml.disabled"
+    dest: "{{ heartbeat_module_file_path }}/{{ item }}.yml"
+  remote_src: true
+  with_items: "{{ heartbeat_module_lists }}"
+  notify: Restart Heartbeats
