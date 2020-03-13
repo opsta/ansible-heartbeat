@@ -17,16 +17,11 @@ heartbeat_custom_fields: {}
 heartbeat_search_config_path: "{{ playbook_dir }}/files/groups/{{ item }}/heartbeat"
 heartbeat_search_config_paths: []
 
-heartbeat_host_config_file_path: "{{ heartbeat_host_config_path | default(inventory_hostname) }}/heartbeat.yml.j2"
+heartbeat_host_config_file_path: heartbeat.yml.j2
 heartbeat_config_file_path: /etc/heartbeat/heartbeat.yml
 heartbeat_config_path: /etc/heartbeat
 
 heartbeat_module_file_path: "{{ heartbeat_config_path }}/monitors.d"
-
-heartbeat_module_lists: 
-  - tcp
-  - icmp
-  - http
 
 heartbeat_monitors:
 - type: http                                              

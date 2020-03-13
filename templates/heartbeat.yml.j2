@@ -18,6 +18,11 @@ heartbeat.config.monitors:
   reload.enabled: false
   # How often to check for changes
   reload.period: 5s
+
+{% if heartbeat_monitors is defined %}
+heartbeat.monitors:
+  {{ heartbeat_monitors | to_nice_yaml(indent=2) | trim | indent(2) }}
+{% endif %}}
 #==================== Elasticsearch template setting ==========================
 
 setup.template.settings:
